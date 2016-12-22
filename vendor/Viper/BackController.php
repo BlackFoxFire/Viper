@@ -18,6 +18,9 @@ abstract class BackController extends ApplicationComponent {
 		--------------
 	*/
 	
+	// Objet des managers.
+	protected $managers;
+	
 	// Le nom du contrôleur actuel.
 	protected $controller = "";
 	
@@ -39,6 +42,7 @@ abstract class BackController extends ApplicationComponent {
 	public function __construct(Application $application, $controller, $action) {
 		parent::__construct($application);
 		
+		$this->managers = new Managers("PDO", PDOFactory::musqlConnexion());
 		$this->view = new View($application);
 		$this->setController($controller);
 		$this->setAction($action);
