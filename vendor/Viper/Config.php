@@ -30,7 +30,7 @@ class Config extends ApplicationComponent {
 	public function get($var) {
 		if(!$this->vars) {
 			$xml = new \DOMDocument;
-			$xml->load(SRC . $this->name . DS . "resources" . DS . "config" . DS . "app.xml");
+			$xml->load(SRC . DS . $this->name . DS . "resources" . DS . "config" . DS . "app.xml");
 			
 			$elements = $xml->getElementsByTagName("define");
 			
