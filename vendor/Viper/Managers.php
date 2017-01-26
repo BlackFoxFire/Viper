@@ -33,7 +33,7 @@ class Managers {
 	*/
 	
 	// Constructeur de classe.
-	public function construct($api, $dao) {
+	public function __construct($api, $dao) {
 		$this->api = $api;
 		$this->dao = $dao;
 	}
