@@ -19,7 +19,7 @@ class PDOFactory {
 	*/
 	
 	// Etablit la connexion avec la base de données.
-	public function mysqlConnexion() {
+	public static function mysqlConnexion() {echo "OOOOOOOOO";
 		$db = new \PDO("mysql:host=localhost;dbname=news", "root", "");
 		$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		
