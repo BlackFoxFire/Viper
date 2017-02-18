@@ -42,7 +42,7 @@ abstract class BackController extends ApplicationComponent {
 	public function __construct(Application $application, $controller, $action) {
 		parent::__construct($application);
 		
-		$this->managers = new Managers("PDO", PDOFactory::musqlConnexion());
+		$this->managers = new Managers("PDO", PDOFactory::mysqlConnexion($this->app->dbConfig()->get()), $this->app->_namespace());
 		$this->view = new View($application);
 		$this->setController($controller);
 		$this->setAction($action);
@@ -89,8 +89,8 @@ abstract class BackController extends ApplicationComponent {
 		}
 		
 		$path = array (
-			SRC . $this->app->name() . DS . "resources" . DS . "views" . DS,
-			SRC . $this->app->name() . DS . "resources" . DS . "views" . DS . $this->controller . DS
+			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS,
+			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS . $this->controller . DS
 		);
 		
 		$this->viewFile = $viewFile;
