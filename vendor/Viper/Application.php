@@ -28,8 +28,14 @@ abstract class Application {
 	// Nom de l'application.
 	protected $name;
 	
+	// Espace de nom de l'application.
+	protected $namespace;
+	
 	// Objet représentant l'utilisateur.
 	protected $user;
+	
+	// Objet contenant les paramètres d'accés à la base de données.
+	protected $dbConfig;
 	
 	// Objet contenant la configuration de l'application.
 	protected $config;
@@ -44,6 +50,7 @@ abstract class Application {
 		$this->httpRequest = new HTTPRequest($this);
 		$this->httpResponse = new HTTPResponse($this);
 		$this->user = new User($this);
+		$this->dbConfig = new DBConfig($this);
 		$this->config = new Config($this);
 		
 		$this->name = "";
@@ -69,6 +76,26 @@ abstract class Application {
 		return $this->name;
 	}
 	
+	// Retourne la valeur de l'attribut $namespace.
+	public function _namespace() {
+		return $this->namespace;
+	}
+	
+	// Retourne la valeur de l'attribut $user.
+	public function user() {
+		return $this->user;
+	}
+	
+	// Retourne la valeur de l'attribut $dbConfig.
+	public function dbConfig() {
+		return $this->dbConfig;
+	}
+	
+	// Retourne la valeur de l'attribut $config.
+	public function config() {
+		return $this->config;
+	}
+	
 	/*
 		Les méthodes.
 		-------------
@@ -79,7 +106,7 @@ abstract class Application {
 		$router = new Router;
 		
 		$xml = new \DOMDocument;
-		$xml->load(SRC .$this->name . DS . "resources" . DS . "config" . DS . "routes.xml");
+		$xml->load(SRC . DS .$this->name . DS . "resources" . DS . "config" . DS . "routes.xml");
 		
 		$routes = $xml->getElementsByTagName("route");
 		
@@ -105,7 +132,7 @@ abstract class Application {
 		
 		$_GET = array_merge($_GET, $matchedRoute->vars());
 		
-		$controllerClass = $this->name . '\\controllers\\' . $matchedRoute->controller() . 'Controller';
+		$controllerClass = $this->namespace . "\\Controllers\\" . $matchedRoute->controller() . "Controller";
 		
 		return new $controllerClass($this, $matchedRoute->controller(), $matchedRoute->action());
 	}
@@ -116,6 +143,10 @@ abstract class Application {
 		$controller->execute();
 		
 		$this->httpResponse->setView($controller->view());
+		
+		// print_r($_SERVER);
+		// print_r($_SESSION);
+		
 		$this->httpResponse->render();
 	}
 	
