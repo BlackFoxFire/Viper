@@ -34,7 +34,7 @@ class Route {
 		$this->url = $url;
 		$this->controller = $controller;
 		$this->action = $action;
-		$this->varsNanes = $varsNames;
+		$this->varsNames = $varsNames;
 	}
 	
 	/*
