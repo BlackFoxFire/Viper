@@ -24,6 +24,9 @@ class Managers {
 	// Le lien avec la base de données.
 	protected $dao;
 	
+	// Espace de nom de l'application.
+	protected $namespace = "\\";
+	
 	// Tableau des modeles.
 	protected $managers = array();
 	
@@ -33,9 +36,13 @@ class Managers {
 	*/
 	
 	// Constructeur de classe.
-	public function __construct($api, $dao) {
+	public function __construct($api, $dao, $ns = null) {
 		$this->api = $api;
 		$this->dao = $dao;
+		
+		if(!empty($ns) && is_string($ns)) {
+			$this->namespace = "\\" . $ns . "\\Models\\";
+		}
 	}
 	
 	/*
@@ -50,8 +57,9 @@ class Managers {
 		}
 		
 		if(!isset($this->managers[$controller])) {
-			$manager = $controller . "Model" . $this->api;
-			$this->manager[$controller] = new $manager($this->dao);
+			$manager = $this->namespace . $controller . "Model" . $this->api;
+			
+			$this->managers[$controller] = new $manager($this->dao);
 		}
 		
 		return $this->managers[$controller];
