@@ -43,18 +43,27 @@ class HTTPResponse extends ApplicationComponent {
 	
 	// Redirige vers une autre page html.
 	public function redirect($location) {
-		header("Location: " . $location);
+		$baseURI = dirname($_SERVER['SCRIPT_NAME']);
+		header("Location: " . $baseURI . $location);
 		exit;
 	}
 	
 	// Redigie vers la page d'erreur 404.
 	public function redirect404() {
 		$this->view = new View($this->app);
-		$this->view->setContentFile(__DIR__ . '/../../Errors/404.html');
+		
+		$path = array (
+			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS
+		);
+		$this->view->setPath($path);
+		$this->view->setViewFile("error404");
+		
+		// $data['host'] = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		// $this->view->setData($data);
 		
 		$this->addHeader('HTTP/1.0 404 Not Found');
 		
-		$this->send();
+		$this->render();
 	}
 	
 	// Affiche la réponce au client.
