@@ -27,8 +27,26 @@ abstract class Model {
 	*/
 	
 	// Constructeur de classe.
-	public function construct($dao) {
+	public function __construct($dao) {
 		$this->dao = $dao;
+	}
+	
+	/*
+		Les méthodes.
+		-------------
+	*/
+	
+	// Exécute une requête SQL.
+	public function execute($sql, array $data = array()) {
+		if(empty($data)) {
+			$result = $this->dao->query($sql);
+		}
+		else {
+			$result = $this->dao->prepare($sql);
+			$result->execute($data);
+		}
+		
+		return $result;
 	}
 	
 }
