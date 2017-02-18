@@ -11,7 +11,7 @@
 
 namespace Viper;
 
-class DBConfig {
+class DBConfig extends ApplicationComponent {
 	
 	/*
 		Les attributs.
@@ -19,7 +19,7 @@ class DBConfig {
 	*/
 	
 	// Tableau des paramètres de l'application.
-	protected static $db = array();
+	protected $db = array();
 	
 	/*
 		Les méthodes.
@@ -27,20 +27,20 @@ class DBConfig {
 	*/
 	
 	// Retourne la configuration de la base de données.
-	public static function get() {
-		if(!self::$db) {
+	public function get() {
+		if(!$this->db) {
 			$xml = new \DOMDocument;
 			$xml->load(APP . DS . "db.xml");
 			
 			$elements = $xml->getElementsByTagName("define");
 			
 			foreach($elements as $element) {
-				self::$db[$element->getAttribute("var")] = $element->getAttribute("value");
+				$this->db[$element->getAttribute("var")] = $element->getAttribute("value");
 			}
 		}
 		
-		if(!empty(self::$db)) {
-			return self::$db;
+		if(!empty($this->db)) {
+			return $this->db;
 		}
 		
 		return null;
