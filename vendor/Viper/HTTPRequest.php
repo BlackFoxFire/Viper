@@ -85,7 +85,10 @@ class HTTPRequest extends ApplicationComponent {
 	
 	// Retourne la valeur de l'élément REQUEST_URI de la super global _SERVER.
 	public function requestURI() {
-		return $_SERVER['REQUEST_URI'];
+		$baseURI = dirname($_SERVER['SCRIPT_NAME']);
+		return str_replace($baseURI, '', $_SERVER['REQUEST_URI']);
+		
+		// return $_SERVER['REQUEST_URI'];
 	}
 	
 }
