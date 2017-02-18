@@ -33,7 +33,7 @@ abstract class Entity {
 	*/
 	
 	// Constructeur de classe.
-	public function construct(array $data = array()) {
+	public function __construct(array $data = array()) {
 		if(!empty($data)) {
 			$this->hydratation($data);
 		}
@@ -80,5 +80,8 @@ abstract class Entity {
 	public function isNew() {
 		return empty($this->id);
 	}
+	
+	// Retourne true si l'objet est valide.
+	abstract public function isValid();
 	
 }
