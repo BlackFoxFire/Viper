@@ -82,6 +82,8 @@ class View extends ApplicationComponent {
 			throw new \RuntimeException("La vue spécifiée n'existe pas.");
 		}
 		
+		$this->data['user'] = $this->app->user();
+		
 		$loader = new \Twig_Loader_Filesystem($this->path);
 		$twig = new \Twig_Environment($loader, array('cache' => false));
 		
