@@ -66,6 +66,11 @@ abstract class Entity {
 		}
 	}
 	
+	// Modifie la valeur de l'attribut $errors.
+	public function setErrors() {
+		$this->errors = array();
+	}
+	
 	/*
 		Les méthodes.
 		-------------
@@ -74,6 +79,13 @@ abstract class Entity {
 	// Retourne true si il y a des erreurs. Sinon false.
 	public function hasErrors() {
 		return !empty($this->errors);
+	}
+	
+	// Supprime un élément du tableau $errors.
+	public function deleteErrors($error) {
+		if($key = array_search($error, $this->errors)) {
+			unset($this->errors[$key]);
+		}
 	}
 	
 	// Retourne true si c'est un nouvel objet. Sinon false.

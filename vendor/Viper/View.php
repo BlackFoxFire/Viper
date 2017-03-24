@@ -27,8 +27,31 @@ class View extends ApplicationComponent {
 	// L'extention des fichiers vue.
 	protected $ext = ".html";
 	
-	// Les données a remplacer dans les templates.
+	// Les données à remplacer dans les templates.
 	protected $data = array();
+	
+	/*
+		Constructeur.
+		-------------
+	*/
+	
+	// Constructeur de classe.
+	public function __construct(Application $application, $controller = null) {
+		parent::__construct($application);
+		
+		$data[] = SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS;
+		
+		if(!empty($controller)) {
+			if(is_string($controller)) {
+				$data[] = SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS . $controller . DS;
+			}
+			else {
+				throw new \InvalidArgumentException("Le controller doit être une chaine de caractères valide");
+			}
+		}
+		
+		$this->path = $data;
+	}
 	
 	/*
 		Les setters.
@@ -54,12 +77,22 @@ class View extends ApplicationComponent {
 	}
 	
 	// Ajoute un variable de page.
-	public function setData(array $data) {
-		if (empty($data)) {
-			throw new \InvalidArgumentException("Le tableau des variables doit être non nul.");
+	public function setData($data, $value = null) {
+		if(is_array($data)) {
+			if(empty($data)) {
+				throw new \InvalidArgumentException("Le tableau des variables doit être non nul.");
+			}
+			
+			$this->data = array_merge($this->data, $data);
 		}
-		
-		$this->data = $data;
+		else {
+			if(!is_string($data) || empty($data)) {
+				throw new \InvalidArgumentException(
+									'Le nom de la variable doit être une chaine de caractères non nulle');
+			}
+			
+			$this->data[$data] = $value;
+		}
 	}
 	
 	/*
