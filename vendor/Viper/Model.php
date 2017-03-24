@@ -39,14 +39,12 @@ abstract class Model {
 	// Exécute une requête SQL.
 	public function execute($sql, array $data = array()) {
 		if(empty($data)) {
-			$result = $this->dao->query($sql);
-		}
-		else {
-			$result = $this->dao->prepare($sql);
-			$result->execute($data);
+			return $request = $this->dao->query($sql);
 		}
 		
-		return $result;
+		$request = $this->dao->prepare($sql);
+		$request->execute($data);
+		return $request;
 	}
 	
 }
