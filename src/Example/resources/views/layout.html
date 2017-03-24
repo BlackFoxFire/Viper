@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+<!-- Début de la pade html -->
+
+	<!-- En-tête de page -->
+    <head>
+		
+		<!-- Jeu de caractère utilisé. -->
+        <meta charset="utf-8" />
+		<base href="{{ basehref }}" />
+		
+		<!-- Page de style css. -->
+		<link rel="stylesheet" href="css/style.css" />
+		
+		<!-- Titre de la page. -->
+        <title>{{ title }}</title>
+
+    </head>
+
+	<!-- Corp de la page. -->
+    <body>
+		
+		{% block body %}
+		{% endblock %}
+		
+    </body>
+	<!-- Fin du corp de la page. -->
+
+<!-- Fin de la page html. -->
+</html>
