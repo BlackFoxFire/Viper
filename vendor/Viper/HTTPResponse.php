@@ -43,26 +43,16 @@ class HTTPResponse extends ApplicationComponent {
 	
 	// Redirige vers une autre page html.
 	public function redirect($location) {
-		$baseURI = dirname($_SERVER['SCRIPT_NAME']);
-		header("Location: " . $baseURI . $location);
+		header("Location: " . $location);
 		exit;
 	}
 	
 	// Redigie vers la page d'erreur 404.
 	public function redirect404() {
 		$this->view = new View($this->app);
-		
-		$path = array (
-			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS
-		);
-		$this->view->setPath($path);
 		$this->view->setViewFile("error404");
 		
-		// $data['host'] = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-		// $this->view->setData($data);
-		
 		$this->addHeader('HTTP/1.0 404 Not Found');
-		
 		$this->render();
 	}
 	
@@ -73,7 +63,7 @@ class HTTPResponse extends ApplicationComponent {
 	
 	// Ajoute un cookie.
 	public function setCookie($name, $value = "", $expire = 0, $path = null, $domain = null,
-									$secure = false, $httpOnly = true) {
+																	$secure = false, $httpOnly = true) {
 		setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
 	}
 	
