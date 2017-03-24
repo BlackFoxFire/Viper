@@ -12,6 +12,8 @@
 
 namespace Viper;
 
+define("BASE_URI", dirname($_SERVER['SCRIPT_NAME']));
+
 abstract class Application {
 	
 	/*
@@ -143,10 +145,6 @@ abstract class Application {
 		$controller->execute();
 		
 		$this->httpResponse->setView($controller->view());
-		
-		// print_r($_SERVER);
-		// print_r($_SESSION);
-		
 		$this->httpResponse->render();
 	}
 	
