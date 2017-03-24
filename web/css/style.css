@@ -1,0 +1,19 @@
+/*
+* 
+* style.css
+* @Auteur : Christophe Dufour
+*
+* Fichier des définitions des styles CSS
+*
+*/
+
+body {
+	background-color: silver;
+	
+	font-family: Verdana;
+	font-size: 1em;
+}
+
+img {
+	width: 100px;
+}
