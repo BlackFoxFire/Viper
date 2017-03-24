@@ -20,7 +20,7 @@ class User extends ApplicationComponent {
 	
 	// Constructeur de classe.
 	public function __construct() {
-		session_set_cookie_params(0, dirname($_SERVER['SCRIPT_NAME']), "", false, true);
+		session_set_cookie_params(0, BASE_URI, "", false, true);
 		session_start();
 	}
 	
@@ -41,6 +41,25 @@ class User extends ApplicationComponent {
 			return $_SESSION[$key];
 		
 		return $returnValue;
+	}
+	
+	// Supprime une variable de session.
+	public function delete($key) {
+		if(isset($_SESSION[$key]))
+			unset($_SESSION[$key]);
+	}
+	
+	// Teste si une variable de session utilisateur existe.
+	// Renvoie true s'il existe, sinon false.
+	public function exists($key) {
+		return isset($_SESSION[$key]);
+	}
+	
+	// Méthode magique appellée lorque que l'on appelle une méthode qui n'existe pas.
+	// Renvoie la valeur d'une variable de session utilisateur.
+	public function __call($method, $arguments) {
+		if(isset($_SESSION[$method]))
+			return $_SESSION[$method];
 	}
 	
 	// Vérifie si un utilisateur est authentifié.
@@ -86,6 +105,11 @@ class User extends ApplicationComponent {
 			return true;
 		
 		return false;
+	}
+	
+	// Détruit la session de l'utilisateur actuelle.
+	public function destroy() {
+		session_destroy();
 	}
 	
 }
