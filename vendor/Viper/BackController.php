@@ -43,7 +43,7 @@ abstract class BackController extends ApplicationComponent {
 		parent::__construct($application);
 		
 		$this->managers = new Managers("PDO", PDOFactory::mysqlConnexion($this->app->dbConfig()->get()), $this->app->_namespace());
-		$this->view = new View($application);
+		$this->view = new View($application, $controller);
 		$this->setController($controller);
 		$this->setAction($action);
 		$this->setViewFile($action);
@@ -88,13 +88,7 @@ abstract class BackController extends ApplicationComponent {
 			throw new \InvalidArgumentException("La vue doit être une chaine de caractères valide");
 		}
 		
-		$path = array (
-			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS,
-			SRC . DS . $this->app->name() . DS . "resources" . DS . "views" . DS . $this->controller . DS
-		);
-		
 		$this->viewFile = $viewFile;
-		$this->view->setPath($path);
 		$this->view->setViewFile($this->viewFile);
 	}
 	
